@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" formControlName="email" class="form-control" id="email">
+                            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']"
+                                class="text-danger">
+                                Email is required.
+                            </div>
+                            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']"
+                                class="text-danger">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" formControlName="password" class="form-control" id="password">
+                            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
+                                class="text-danger">
+                                Password is required.
+                            </div>
+                            <div *ngIf="loginForm.get('password')?.touched">
+                                <div *ngIf="loginForm.get('password')?.errors?.['incorrectLength']" class="text-danger">
+                                Password must be minimum of 6 characters.
+                                </div>
+                                <div *ngIf="loginForm.get('password')?.errors?.['missingUppercase']" class="text-danger">
+                                Password must contain at least one uppercase letter.
+                                </div>
+                                <div *ngIf="loginForm.get('password')?.errors?.['missingLowercase']" class="text-danger">
+                                Password must contain at least one lowercase letter.
+                                </div>
+                                <div *ngIf="loginForm.get('password')?.errors?.['missingDigit']" class="text-danger">
+                                Password must contain at least one digit.
+                                </div>
+                                <div *ngIf="loginForm.get('password')?.errors?.['missingSymbol']" class="text-danger">
+                                Password must contain at least one symbol.
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="signup-link">
+                    <a href="/signup">Signup</a> <!-- Update href as per your routing -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

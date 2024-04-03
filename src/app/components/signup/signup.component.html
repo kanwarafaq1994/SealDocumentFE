@@ -1,0 +1,81 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Signup</div>
+                <div class="card-body">
+                    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" formControlName="email" class="form-control" id="email">
+                            <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']"
+                                class="text-danger">
+                                Email is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" formControlName="firstName" class="form-control" id="firstName">
+                            <div *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']"
+                                class="text-danger">
+                                First Name is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" formControlName="lastName" class="form-control" id="lastName">
+                            <div *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']"
+                                class="text-danger">
+                                Last Name is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" formControlName="password" class="form-control" id="password">
+                            <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']"
+                                class="text-danger">
+                                Password is required.
+                            </div>
+                            <div *ngIf="signupForm.get('password')?.touched">
+                                <div *ngIf="signupForm.get('password')?.errors?.['incorrectLength']"
+                                    class="text-danger">
+                                    Password must be minimum of 6 characters.
+                                </div>
+                                <div *ngIf="signupForm.get('password')?.errors?.['missingUppercase']"
+                                    class="text-danger">
+                                    Password must contain at least one uppercase letter.
+                                </div>
+                                <div *ngIf="signupForm.get('password')?.errors?.['missingLowercase']"
+                                    class="text-danger">
+                                    Password must contain at least one lowercase letter.
+                                </div>
+                                <div *ngIf="signupForm.get('password')?.errors?.['missingDigit']" class="text-danger">
+                                    Password must contain at least one digit.
+                                </div>
+                                <div *ngIf="signupForm.get('password')?.errors?.['missingSymbol']" class="text-danger">
+                                    Password must contain at least one symbol.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" formControlName="confirmPassword" class="form-control"
+                                id="confirmPassword">
+                            <div *ngIf="signupForm.errors?.['passwordsNotMatching'] && signupForm.get('confirmPassword')?.touched"
+                                class="text-danger">
+                                Passwords do not match.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Create
+                            Account</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="signup-link">
+                    <a href="/login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
