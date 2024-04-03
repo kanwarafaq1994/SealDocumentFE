@@ -157,7 +157,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <ng-container *ngIf="publicPagedItems.length > 0; else noDataTemplate">
+                                <ng-container *ngIf="publicPagedItems.length > 0; else noPublicDataTemplate">
                                     <tr *ngFor="let file of publicPagedItems">
                                         <td>
                                             <div class="d-flex align-items-center">
@@ -207,7 +207,7 @@
                                         </td>
                                     </tr>
                                 </ng-container>
-                                <ng-template #noDataTemplate>
+                                <ng-template #noPublicDataTemplate>
                                     <tr>
                                         <td colspan="6" class="text-center">No Public Document Found</td>
                                     </tr>

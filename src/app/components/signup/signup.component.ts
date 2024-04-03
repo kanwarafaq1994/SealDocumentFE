@@ -71,7 +71,6 @@ export class SignupComponent {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
       let info = {
         "firstName": this.signupForm.value.firstName,
         "lastName": this.signupForm.value.lastName,
@@ -88,7 +87,14 @@ export class SignupComponent {
           this.router.navigate(['/login']);
         },
         error: (error: any) => {
-          this.notificationsService.error('Error!', error.message);
+          if (error.error && Array.isArray(error.error)) {
+            const errorMessage = error.error.join('\n');
+            this.notificationsService.error('Error!', errorMessage);
+          } 
+          else {
+            this.notificationsService.error('Error!', 'An unexpected error occurred.');
+            console.log('An unexpected error occurred.', error);
+          }
         }
       });
 
