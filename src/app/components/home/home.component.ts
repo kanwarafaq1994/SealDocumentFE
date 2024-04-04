@@ -6,13 +6,14 @@ import { NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog';
 import { ImagePreviewModalComponent } from '../image-preview-modal/image-preview-modal.component';
 import { ViewportScroller } from '@angular/common';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  baseUrl = environment.baseUrl;
   fileInput: any;
   modalService: any;
   viewportScroller: any;
@@ -64,7 +65,7 @@ export class HomeComponent {
       });
 
       // Make a single HTTP request to upload all files
-      this.http.post('https://localhost:44325/api/Document', formData, {
+      this.http.post(this.baseUrl + '/Document', formData, {
         reportProgress: true,
         observe: 'events'
       }).subscribe((event: HttpEvent<any>) => {
@@ -72,13 +73,11 @@ export class HomeComponent {
           case HttpEventType.UploadProgress:
             if (event.total) {
               const overallProgress = Math.round(100 * event.loaded / event.total);
-              console.log(`Overall upload progress: ${overallProgress}%`);
               // Update the overall progress variable
               this.uploadProgress = overallProgress;
             }
             break;
           case HttpEventType.Response:
-            console.log('All files uploaded successfully', event.body);
             this.displayErrorMessages(event.body);
             // this.notificationsService.success('Success!', "Documenty has been uploaded Sucessfully.");
             // Handle successful upload here, reset the progress indicator
@@ -88,7 +87,6 @@ export class HomeComponent {
             break;
         }
       }, (error) => {
-        console.error('Upload error', error);
         this.notificationsService.error('Error!', error.error.message);
         // Handle error here, reset the progress indicator
         this.uploadProgress = 0;
@@ -122,7 +120,7 @@ export class HomeComponent {
     let userInfo: any = localStorage.getItem('documentmanagement');
     this.apiService.getUserDocuments(JSON.parse(userInfo).userId).subscribe({
       next: (res: any) => {
-        this.files = res;
+        this.files = res?.documents;
         this.pageChanged(1);
       },
       error: (error: any) => {
@@ -147,7 +145,7 @@ export class HomeComponent {
   }
 
   downloadDocument(id: any, name: ""): void {
-    const url = `https://localhost:44325/api/Document/${id}`;
+    const url = this.baseUrl + `/Document/${id}`;
 
     this.http.get(url, { responseType: 'blob' }).subscribe(blob => {
       const a = document.createElement('a');
@@ -164,8 +162,7 @@ export class HomeComponent {
       this.getUserDocuments();
       this.getPublicUserDocuments();
     }, error => {
-      console.error('Download error:', error);
-      this.notificationsService.error('Error!', "An Error accuredan during the processing.Please try again later.")
+      this.notificationsService.error('Error!', "An Error accuredan during the processing.Please try again later."+error.error)
     });
   }
 
@@ -190,7 +187,6 @@ export class HomeComponent {
   // Pagination for private document
 
   pageChanged(newPage: number) {
-    console.log(newPage)
     this.currentPage = newPage;
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -229,7 +225,6 @@ export class HomeComponent {
   // Pagination for public document
 
   publicPageChanged(newPage: number) {
-    console.log(newPage)
     this.currentPublicPage = newPage;
     const startIndex = (this.currentPublicPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;

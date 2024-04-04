@@ -93,7 +93,6 @@ export class SignupComponent {
           } 
           else {
             this.notificationsService.error('Error!', 'An unexpected error occurred.');
-            console.log('An unexpected error occurred.', error);
           }
         }
       });

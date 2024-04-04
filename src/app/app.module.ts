@@ -18,7 +18,6 @@ export function tokenGetter() {
   let localStorageData = localStorage.getItem('documentmanagement');
   if (localStorageData) {
     var detail: any = JSON.parse(localStorageData);
-    console.log("detail", detail);
     return detail.token;
   } else {
     return "empty"

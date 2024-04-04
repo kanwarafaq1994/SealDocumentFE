@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'documentManagementSystem';
   options = {
-    timeOut: 8000,
+    timeOut: 5000,
     showProgressBar: true,
     pauseOnHover: true,
     clickToClose: true,

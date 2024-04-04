@@ -24,11 +24,9 @@ export class LoginComponent {
     const errors: ValidationErrors = {};
 
     if (!value) {
-      // If the control is empty, you might want to skip validation or add a 'required' error
       return null;
     }
 
-    // Checking the length
     if (value.length <= 5) {
       errors['incorrectLength'] = true;
     }
@@ -57,7 +55,6 @@ export class LoginComponent {
     return Object.keys(errors).length > 0 ? errors : null;
   }
   onSubmit() {
-    console.log(this.loginForm.value);
     if (this.loginForm.valid) { // Check if form is valid
       const loginData = {
         email: this.loginForm.value.email,
